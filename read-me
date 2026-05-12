@@ -1,0 +1,82 @@
+# 🏨 Hotel Management System
+
+A console-based Hotel Management System built in Java that allows users to manage hotel room bookings, customer records, and a first-come-first-served queue — all through an interactive menu interface.
+
+---
+
+## 📋 Features
+
+| Option | Description |
+|--------|-------------|
+| **V** | View all rooms and their occupancy status |
+| **A** | Add a customer to an available room |
+| **E** | Display all currently empty rooms |
+| **D** | Delete (vacate) a customer from a room |
+| **F** | Find a room by customer name |
+| **S** | Save current room data to a text file |
+| **L** | Load room data back from the saved file |
+| **O** | View all occupied rooms sorted alphabetically by name |
+| **3** | Display and dequeue the first 3 customers in the waiting queue |
+| **Q** | Quit the program |
+
+---
+
+## 🏗️ Project Structure
+
+```
+├── Main.java       # Entry point — initialises and launches the menu
+├── Menu.java       # Core application logic and all menu operations
+├── Room.java       # Room model with getter/setter for customer name
+└── Queue.java      # Fixed-size queue (size 7) for customer registration order
+```
+
+### Class Overview
+
+- **`Main`** — Bootstraps the application by creating a `Menu` object and calling `initialize()` then `menu()`.
+- **`Menu`** — Contains all business logic: room management, file I/O (read/write `data.txt`), bubble sort for alphabetical ordering, and input validation with exception handling.
+- **`Room`** — Simple POJO representing a hotel room. Rooms default to `"e"` (empty) on creation.
+- **`Queue`** — Circular-style fixed-size queue that tracks customer check-in order. Automatically removes the front entry when the queue overflows (size 7). The `displayQueue()` method dequeues and prints the first 3 customers.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Java JDK 8 or higher
+
+### Compile
+
+```bash
+javac Main.java Menu.java Room.java Queue.java
+```
+
+### Run
+
+```bash
+java Main
+```
+
+---
+
+## 💾 Data Persistence
+
+Selecting **S** writes the current state of all 10 rooms to `data.txt` in the working directory. Empty rooms are stored as `Empty Room <number>` and customer names are stored as plain text, one per line.
+
+Selecting **L** reads `data.txt` back and restores the room state into the program.
+
+---
+
+## ⚙️ Implementation Notes
+
+- The hotel supports **10 rooms** (indexed 1–10).
+- Input is case-insensitive for all menu selections and customer name searches.
+- Robust exception handling covers `InputMismatchException`, `IndexOutOfBoundsException`, and `NullPointerException` across all user-input flows.
+- Alphabetical ordering uses a **flag-based bubble sort** on a copy of the names array, preserving the original room assignments.
+- The customer queue uses a fixed array of size **7**. When the queue is full, the front customer is automatically removed (FIFO eviction) to make room for the new entry.
+
+---
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
